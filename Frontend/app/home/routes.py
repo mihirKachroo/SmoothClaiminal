@@ -57,7 +57,7 @@ def IsFileType(filename, fileTypes):
 def upload():
     
     message = ''
-
+    gottenNames=''
     
     if request.method == "POST":
         if request.files:
@@ -65,30 +65,31 @@ def upload():
             if selectedFile.filename == "":
                 print("No file selected")
                 message = "**Please select a file. (Image, Word document, pdf)**"
-                return render_template('upload.html', message = message)
+                return render_template('upload.html', message = message, gottenNames=gottenNames)
             
             if not IsFileType(selectedFile.filename, ["DOCX", "PDF", "JPEG", "PNG"]):
                 print("haha")
+                
                 message = "Incorrect image extension"
-                return render_template('upload.html', message = message)
+                return render_template('upload.html', message = message, gottenNames=gottenNames)
             else:
                 if IsFileType(selectedFile.filename, ["DOCX", "PDF"]):
-                    selectedFile.save(os.path.join("./app/base/static/files/", selectedFile.filename))
                     message = textract.process("./app/base/static/files/" + selectedFile.filename, encoding='utf-8')
-                    ourString = """
-                    Hey,
-                    This week has been crazy. Attached is my report on IBM. Can you give it a quick read and provide some feedback.
-                    Also, make sure you reach out to Claire (claire@xyz.com).
-                    You're the best.
-                    Cheers,
-                    George W.
-                    212-555-1234
-                    Wow Willson you're insane
-                    """
-                    gottenIs = name_addr_extract.infoExtracter(messageGotten)
-                    gottenNames="yo"
+                    
                     return render_template('upload.html', message = message, gottenNames=gottenNames)
                 else:
-                    return render_template('upload.html', message = "It is an image file.")
+                    return render_template('upload.html', message = "It is an image file.", gottenNames=gottenNames)
 
-    return render_template('upload.html', message = message)
+    ourString = """
+    Hey,
+    This week has been crazy. Attached is my report on IBM. Can you give it a quick read and provide some feedback.
+    Also, make sure you reach out to Claire (claire@xyz.com).
+    You're the best.
+    Cheers,
+    George W.
+    212-555-1234
+    Wow Willson you're insane
+    """
+    gottenIs = name_addr_extract.extract_names(ourString)
+    gottenNames=gottenIs
+    return render_template('upload.html', message = message, gottenNames=gottenNames)
