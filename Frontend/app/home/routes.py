@@ -56,8 +56,11 @@ def IsFileType(filename, fileTypes):
 @blueprint.route('/upload.html',methods = ['POST', 'GET'])
 def upload():
     
+    byteString = ''
     message = ''
-    gottenNames=''
+    gottenNames = 'No Info'
+    gottenPhone = 'No Info'
+    gottenEmail = 'No Info'
     
     if request.method == "POST":
         if request.files:
@@ -65,35 +68,21 @@ def upload():
             if selectedFile.filename == "":
                 print("No file selected")
                 message = "**Please select a file. (Image, Word document, pdf)**"
-                return render_template('upload.html', message = message, gottenNames=gottenNames)
+                return render_template('upload.html', message = message)
             
             if not IsFileType(selectedFile.filename, ["DOCX", "PDF", "JPEG", "PNG"]):
-                print("haha")
-                
                 message = "Incorrect image extension"
-                return render_template('upload.html', message = message, gottenNames=gottenNames)
+                return render_template('upload.html', message = message)
             else:
                 if IsFileType(selectedFile.filename, ["DOCX", "PDF"]):
-                    message = textract.process("./app/base/static/files/" + selectedFile.filename, encoding='utf-8')
-                    
-                    return render_template('upload.html', message = message, gottenNames=gottenNames)
+                    selectedFile.save(os.path.join("./app/base/static/files/", selectedFile.filename))
+                    byteString = textract.process("./app/base/static/files/" + selectedFile.filename, encoding='utf-8')
+                    message = byteString.decode('utf-8')
+                    gottenNames = name_addr_extract.extract_names(message)
+                    gottenPhone = name_addr_extract.extract_phone_numbers(message)
+                    gottenEmail = name_addr_extract.extract_email_addresses(message)
+                    return render_template('upload.html', message = message, 
+                    gottenNames = gottenNames, gottenPhone = gottenPhone, gottenEmail = gottenEmail)
                 else:
                     return render_template('upload.html', message = "It is an image file.", gottenNames=gottenNames)
-
-    ourString = """
-    Hey,
-    This week has been crazy. Attached is my report on IBM. Can you give it a quick read and provide some feedback.
-    Also, make sure you reach out to Claire (claire@xyz.com).
-    You're the best.
-    Cheers,
-    George W.
-    212-555-1234
-    Wow Willson you're insane
-    """
-    gottenIs = name_addr_extract.extract_names(ourString)
-    gottenNames=gottenIs
-    return render_template('upload.html', message = message, gottenNames=gottenNames)
-
-@blueprint.route('/claims.html')
-def claims():
-    return render_template('claims-list.html')
+    return render_template('upload.html', message = message)

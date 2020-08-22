@@ -1,10 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-
+  <head>
     <title>
-        Smooth Claiminal - {% block title %}{% endblock %}
+        Smooth C slaiminal - {% block title %}{% endblock %}
     </title>    
 	<!-- HTML5 Shim and Respond.js IE11 support of HTML5 elements and media queries -->
 	<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -27,20 +25,17 @@
 
     <!-- Specific CSS goes HERE -->
     {% block stylesheets %}{% endblock stylesheets %}
-
-</head>
-<body>
-
+  </head>
+  <body>
     <!-- [ auth-signin ] start -->
     <div class="auth-wrapper">
-        {% block content %}{% endblock content %}
+      {% block content %}{% endblock content %}
     </div>
     <!-- [ auth-signin ] end -->
 
     {% include 'includes/scripts.html' %}
 
     <!-- Specific Page JS goes HERE  -->
-    {% block javascripts %}{% endblock javascripts %} 
-
-</body>
+    {% block javascripts %}{% endblock javascripts %}
+  </body>
 </html>
