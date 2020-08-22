@@ -4,16 +4,6 @@ from nltk.corpus import stopwords
 stop = stopwords.words('english')
 import numpy
 
-string = """
-Hey,
-This week has been crazy. Attached is my report on IBM. Can you give it a quick read and provide some feedback.
-Also, make sure you reach out to Claire (claire@xyz.com).
-You're the best.
-Cheers,
-George W.
-212-555-1234
-Wow Willson you're insane
-"""
 
 def extract_phone_numbers(string):
     r = re.compile(r'(\d{3}[-\.\s]??\d{3}[-\.\s]??\d{4}|\(\d{3}\)\s*\d{3}[-\.\s]??\d{4}|\d{3}[-\.\s]??\d{4})')
@@ -41,7 +31,7 @@ def extract_names(document):
                     names.append(' '.join([c[0] for c in chunk]))
     return names
 
-def main():
+def infoExtracter(string):
     numbers = extract_phone_numbers(string)
     emails = extract_email_addresses(string)
     names = extract_names(string)
@@ -50,5 +40,18 @@ def main():
     print(emails)
     print(names)
 
-if __name__ == '__main__':
-    main()
+
+#Remove
+globalString = """
+Hey,
+This week has been crazy. Attached is my report on IBM. Can you give it a quick read and provide some feedback.
+Also, make sure you reach out to Claire (claire@xyz.com).
+You're the best.
+Cheers,
+George W.
+212-555-1234
+Wow Willson you're insane
+"""
+
+
+infoExtracter(globalString)
