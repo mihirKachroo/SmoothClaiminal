@@ -26,18 +26,8 @@ class OrbitDBAddress {
 
     let accessControllerHash
 
-    const validateHash = (hash) => {
-      const prefixes = ['zd', 'Qm', 'ba', 'k5']
-      for (const p of prefixes) {
-        if (hash.indexOf(p) > -1) {
-          return true
-        }
-      }
-      return false
-    }
-
     try {
-      accessControllerHash = validateHash(parts[0])
+      accessControllerHash = (parts[0].indexOf('zd') > -1 || parts[0].indexOf('Qm') > -1 || parts[0].indexOf('ba') > -1)
         ? new CID(parts[0]).toBaseEncodedString()
         : null
     } catch (e) {

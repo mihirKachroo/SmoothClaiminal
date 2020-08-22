@@ -1,9 +1,5 @@
 'use strict';
 
-var _getIterator2 = require('babel-runtime/core-js/get-iterator');
-
-var _getIterator3 = _interopRequireDefault(_getIterator2);
-
 var _classCallCheck2 = require('babel-runtime/helpers/classCallCheck');
 
 var _classCallCheck3 = _interopRequireDefault(_classCallCheck2);
@@ -47,40 +43,8 @@ var OrbitDBAddress = function () {
 
       var accessControllerHash = void 0;
 
-      var validateHash = function validateHash(hash) {
-        var prefixes = ['zd', 'Qm', 'ba', 'k5'];
-        var _iteratorNormalCompletion = true;
-        var _didIteratorError = false;
-        var _iteratorError = undefined;
-
-        try {
-          for (var _iterator = (0, _getIterator3.default)(prefixes), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
-            var p = _step.value;
-
-            if (hash.indexOf(p) > -1) {
-              return true;
-            }
-          }
-        } catch (err) {
-          _didIteratorError = true;
-          _iteratorError = err;
-        } finally {
-          try {
-            if (!_iteratorNormalCompletion && _iterator.return) {
-              _iterator.return();
-            }
-          } finally {
-            if (_didIteratorError) {
-              throw _iteratorError;
-            }
-          }
-        }
-
-        return false;
-      };
-
       try {
-        accessControllerHash = validateHash(parts[0]) ? new CID(parts[0]).toBaseEncodedString() : null;
+        accessControllerHash = parts[0].indexOf('zd') > -1 || parts[0].indexOf('Qm') > -1 || parts[0].indexOf('ba') > -1 ? new CID(parts[0]).toBaseEncodedString() : null;
       } catch (e) {
         return false;
       }
