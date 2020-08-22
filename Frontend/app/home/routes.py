@@ -68,6 +68,7 @@ def upload():
                 return render_template('upload.html', message = message)
             else:
                 if IsFileType(selectedFile.filename, ["DOCX", "PDF"]):
+                    selectedFile.save(os.path.join("./app/base/static/files/", selectedFile.filename))
                     message = textract.process("./app/base/static/files/" + selectedFile.filename, encoding='utf-8')
                     return render_template('upload.html', message = message)
                 else:
