@@ -93,3 +93,7 @@ def upload():
     gottenIs = name_addr_extract.extract_names(ourString)
     gottenNames=gottenIs
     return render_template('upload.html', message = message, gottenNames=gottenNames)
+
+@blueprint.route('/claims.html')
+def claims():
+    return render_template('claims-list.html')

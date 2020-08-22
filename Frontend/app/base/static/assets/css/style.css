@@ -5015,6 +5015,10 @@ input[type="button"].btn-block {
     padding: 25px;
 }
 
+.card-body h6 {
+    font-size: 20px;
+}
+
 .card-title {
     margin-bottom: 25px;
 }
@@ -20487,6 +20491,7 @@ pre[class*=language-]:before {
     display: flex;
     -webkit-box-align: center;
     align-items: center;
+    font-size: 18px;
 }
 
 .b-brand .b-bg {
