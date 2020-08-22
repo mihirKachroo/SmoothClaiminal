@@ -1,6 +1,6 @@
 {
-  "name": "orbit",
-  "version": "0.24.2",
+  "name": "ff",
+  "version": "0.24.0",
   "description": "Distributed p2p database on IPFS",
   "author": "Haad",
   "license": "MIT",
@@ -14,13 +14,14 @@
   "main": "src/OrbitDB.js",
   "dependencies": {
     "cids": "^0.7.1",
+    "ipfs": "^0.49.0",
     "ipfs-pubsub-1on1": "~0.0.6",
     "is-node": "^1.0.2",
     "localstorage-down": "^0.6.7",
     "logplease": "^1.2.14",
     "multihashes": "^0.4.12",
     "orbit-db": "^0.24.2",
-    "orbit-db-access-controllers": "^0.2.2",
+    "orbit-db-access-controllers": "~0.2.2",
     "orbit-db-cache": "~0.3.0",
     "orbit-db-counterstore": "~1.9.0",
     "orbit-db-docstore": "~1.9.0",
@@ -32,8 +33,7 @@
     "orbit-db-kvstore": "~1.9.0",
     "orbit-db-pubsub": "~0.5.5",
     "orbit-db-storage-adapter": "~0.5.3",
-    "orbit-db-store": "~3.3.0",
-    "touch": "^3.1.0"
+    "orbit-db-store": "~3.3.0"
   },
   "devDependencies": {
     "adm-zip": "^0.4.13",
@@ -51,7 +51,7 @@
     "markdown-toc": "^1.2.0",
     "mkdirp": "^0.5.1",
     "mocha": "^5.2.0",
-    "orbit-db-test-utils": "^0.9.4",
+    "orbit-db-test-utils": "^0.9.3",
     "p-each-series": "^1.0.0",
     "p-map": "^1.2.0",
     "p-map-series": "^1.0.0",
@@ -64,8 +64,7 @@
     "standard": "^12.0.1",
     "validate-maintainers": "^1.1.0",
     "webpack": "^4.41.2",
-    "webpack-cli": "^3.3.10",
-    "node-pre-gyp": "0.12.0"
+    "webpack-cli": "^3.3.10"
   },
   "scripts": {
     "examples": "npm run examples:node",
@@ -76,7 +75,7 @@
     "lint:docs": "remark -qf -u validate-links .",
     "test:all": "npm run test:browser-multiple-tabs && npm run test",
     "test": "cross-env TEST=js mocha && cross-env TEST=go mocha;",
-    "test:browser-multiple-tabs": "npm run build:dist && cpy dist/orbitdb.min.js ./test/browser --rename=orbitdb.js && cpy node_modules/ipfs/dist/index.min.js ./test/browser --rename=ipfs.js && cpy node_modules/orbit-db-identity-provider/dist/index-browser.min.js ./test/browser --rename=identities.js && cpy node_modules/ipfs-log/dist/ipfslog.min.js ./test/browser && mocha ./test/browser/concurrent.spec.js",
+    "test:browser-multiple-tabs": "npm run build:dist && cpy dist/orbitdb.min.js ./test/browser --rename=orbitdb.js && cpy node_modules/ipfs/dist/index.js ./test/browser --rename=ipfs.js && cpy node_modules/orbit-db-identity-provider/dist/index-browser.min.js ./test/browser --rename=identities.js && cpy node_modules/ipfs-log/dist/ipfslog.min.js ./test/browser && mocha ./test/browser/concurrent.spec.js",
     "build": "npm run build:es5 && npm run build:debug && npm run build:dist && npm run build:examples && npm run build:docs/toc",
     "build:examples": "webpack --config conf/webpack.example.config.js --sort-modules-by size",
     "build:dist": "webpack --config conf/webpack.config.js --sort-modules-by size && mkdirp examples/browser/lib && cpy dist/orbitdb.min.js examples/browser/lib",
@@ -85,7 +84,7 @@
     "build:es5": "babel src --out-dir ./dist/es5/ --presets babel-preset-env --plugins babel-plugin-transform-runtime"
   },
   "go-ipfs": {
-    "version": "v0.5.1"
+    "version": "v0.5.0-rc2"
   },
   "standard": {
     "env": "mocha",

@@ -1,5 +1,6 @@
 # Imports the Google Cloud client library
 # provides entity recognition/analysis
+import google
 from google.cloud import language_v1
 from google.cloud.language_v1 import enums
 from google.cloud.language import types
