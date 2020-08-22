@@ -1,1 +1,0 @@
-# HackThe6ix Blockchain
