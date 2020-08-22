@@ -1,1 +1,1 @@
-# HackThe6ix
+# HackThe6ix Frontend

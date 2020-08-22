@@ -1,0 +1,191 @@
+{% extends "layouts/base.html" %}
+
+{% block title %} Dashboard {% endblock %} 
+
+<!-- Specific CSS goes HERE -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}	
+
+    <!-- [ Main Content ] start -->
+    <div class="pcoded-main-container">
+        <div class="pcoded-content">
+            <!-- [ breadcrumb ] start -->
+            <!-- <div class="page-header">
+                <div class="page-block">
+                    <div class="row align-items-center">
+                        <div class="col-md-12">
+                            <div class="page-header-title">
+                                <h5 class="m-b-10">Dashboard Analytics</h5>
+                            </div>
+                            <ul class="breadcrumb">
+                                <li class="breadcrumb-item"><a href="index.html"><i class="feather icon-home"></i></a></li>
+                                <li class="breadcrumb-item"><a href="#!">Dashboard Analytics</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div> -->
+            <!-- [ breadcrumb ] end -->
+            <!-- [ Main Content ] start -->
+            <div class="row">
+                <!-- order-card start -->
+                <div class="col-md-6 col-xl-3">
+                    <div class="card bg-c-blue order-card">
+                        <div class="card-body">
+                            <h6 class="text-white">Orders Received</h6>
+                            <h2 class="text-right text-white"><i class="feather icon-shopping-cart float-left"></i><span>486</span></h2>
+                            <p class="m-b-0">Completed Orders<span class="float-right">351</span></p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-xl-3">
+                    <div class="card bg-c-green order-card">
+                        <div class="card-body">
+                            <h6 class="text-white">Total Sales</h6>
+                            <h2 class="text-right text-white"><i class="feather icon-tag float-left"></i><span>1641</span></h2>
+                            <p class="m-b-0">This Month<span class="float-right">213</span></p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-xl-3">
+                    <div class="card bg-c-yellow order-card">
+                        <div class="card-body">
+                            <h6 class="text-white">Revenue</h6>
+                            <h2 class="text-right text-white"><i class="feather icon-repeat float-left"></i><span>$42,562</span></h2>
+                            <p class="m-b-0">This Month<span class="float-right">$5,032</span></p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-xl-3">
+                    <div class="card bg-c-red order-card">
+                        <div class="card-body">
+                            <h6 class="text-white">Total Profit</h6>
+                            <h2 class="text-right text-white"><i class="feather icon-award float-left"></i><span>$9,562</span></h2>
+                            <p class="m-b-0">This Month<span class="float-right">$542</span></p>
+                        </div>
+                    </div>
+                </div>
+                <!-- order-card end -->
+                <!-- users visite start -->
+                <div class="col-md-12 col-xl-6">
+                    <div class="card">
+                        <div class="card-header">
+                            <h5>Unique Visitor</h5>
+                        </div>
+                        <div class="card-body pl-0 pb-0">
+                            <div id="unique-visitor-chart"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12 col-xl-6">
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="card">
+                                <div class="card-body bg-patern">
+                                    <div class="row">
+                                        <div class="col-auto">
+                                            <span>Customers</span>
+                                        </div>
+                                        <div class="col text-right">
+                                            <h2 class="mb-0">826</h2>
+                                            <span class="text-c-green">8.2%<i class="feather icon-trending-up ml-1"></i></span>
+                                        </div>
+                                    </div>
+                                    <div id="customer-chart"></div>
+                                    <div class="row mt-3">
+                                        <div class="col">
+                                            <h3 class="m-0"><i class="fas fa-circle f-10 m-r-5 text-success"></i>674</h3>
+                                            <span class="ml-3">New</span>
+                                        </div>
+                                        <div class="col">
+                                            <h3 class="m-0"><i class="fas fa-circle text-primary f-10 m-r-5"></i>182</h3>
+                                            <span class="ml-3">Return</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="card bg-primary text-white">
+                                <div class="card-body bg-patern-white">
+                                    <div class="row">
+                                        <div class="col-auto">
+                                            <span>Customers</span>
+                                        </div>
+                                        <div class="col text-right">
+                                            <h2 class="mb-0 text-white">826</h2>
+                                            <span class="text-white">8.2%<i class="feather icon-trending-up ml-1"></i></span>
+                                        </div>
+                                    </div>
+                                    <div id="customer-chart1"></div>
+                                    <div class="row mt-3">
+                                        <div class="col">
+                                            <h3 class="m-0 text-white"><i class="fas fa-circle f-10 m-r-5 text-success"></i>674</h3>
+                                            <span class="ml-3">New</span>
+                                        </div>
+                                        <div class="col">
+                                            <h3 class="m-0 text-white"><i class="fas fa-circle f-10 m-r-5 text-white"></i>182</h3>
+                                            <span class="ml-3">Return</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- users visite end -->
+
+
+                <!-- social statustic start -->
+                <div class="col-md-6 col-lg-4">
+                    <div class="card seo-card overflow-hidden">
+                        <div class="card-body seo-statustic">
+                            <i class="feather icon-save f-20 text-c-red"></i>
+                            <h5 class="mb-1">65%</h5>
+                            <p>Memory</p>
+                        </div>
+                        <div class="seo-chart">
+                            <div id="seo-card1"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12 col-lg-4">
+                    <div class="card">
+                        <div class="card-body text-center">
+                            <i class="fa fa-envelope-open text-c-blue d-block f-40"></i>
+                            <h4 class="m-t-20"><span class="text-c-blue">8.62k</span> Subscribers</h4>
+                            <p class="m-b-20">Your main list is growing</p>
+                            <button class="btn btn-primary btn-sm btn-round">Manage List</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4">
+                    <div class="card">
+                        <div class="card-body text-center">
+                            <i class="fab fa-twitter text-c-green d-block f-40"></i>
+                            <h4 class="m-t-20"><span class="text-c-blgreenue">+40</span> Followers</h4>
+                            <p class="m-b-20">Your main list is growing</p>
+                            <button class="btn btn-success btn-sm btn-round">Check them out</button>
+                        </div>
+                    </div>
+                </div>
+                <!-- social statustic end -->
+              
+            </div>
+            <!-- [ Main Content ] end -->
+        </div>
+    </div>
+    <!-- [ Main Content ] end -->
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}
+
+    <!-- Apex Chart -->
+    <script src="/static/assets/js/plugins/apexcharts.min.js"></script>
+    <!-- custom-chart js -->
+    <script src="/static/assets/js/pages/dashboard-main.js"></script>
+
+{% endblock javascripts %}
