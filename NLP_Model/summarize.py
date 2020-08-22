@@ -26,6 +26,8 @@ def sample_analyze_entities(text_content):
   address = []
   number = []
   date = []
+  price = []
+  orgs = []
   other = []
 
   # Loop through entitites returned from the API
@@ -50,6 +52,12 @@ def sample_analyze_entities(text_content):
       elif (ent == "DATE"):
         date.append(entity.name)
 
+      elif (ent == "PRICE"):
+        price.append(entity.name)
+
+      elif (ent == "ORGANIZATION"):
+        orgs.append(entity.name)
+
       else:
         other.append(entity.name)
 
@@ -68,6 +76,9 @@ def sample_analyze_entities(text_content):
       # for mention in entity.mentions:
       #     print(u"Mention text: {}".format(mention.text.content))
 
+  # Look through the "other"
+
+
   print("People:")
   print(people)
   print("---------------")
@@ -80,12 +91,20 @@ def sample_analyze_entities(text_content):
   print(address)
   print("---------------")
 
-  print("Numbers:")
-  print(number)
-  print("---------------")
-
   print("Dates:")
   print(date)
+  print("---------------")
+
+  print("Prices:")
+  print(price)
+  print("---------------")
+
+  print("Organizations:")
+  print(orgs)
+  print("---------------")
+
+  print("Numbers:")
+  print(number)
   print("---------------")
 
   print("Other:")
