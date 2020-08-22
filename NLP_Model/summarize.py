@@ -78,37 +78,44 @@ def sample_analyze_entities(text_content):
 
   # Look through the "other"
 
+  if (len(people) != 0):
+    print("People:")
+    print(people)
+    print("---------------")
 
-  print("People:")
-  print(people)
-  print("---------------")
+  if (len(location) != 0):
+    print("Locations:")
+    print(location)
+    print("---------------")
 
-  print("Locations:")
-  print(location)
-  print("---------------")
+  if (len(address) != 0):
+    print("Addresses:")
+    print(address)
+    print("---------------")
 
-  print("Addresses:")
-  print(address)
-  print("---------------")
+  if (len(date) != 0):
+    print("Dates:")
+    print(date)
+    print("---------------")
 
-  print("Dates:")
-  print(date)
-  print("---------------")
+  if (len(price) != 0):
+    print("Prices:")
+    print(price)
+    print("---------------")
 
-  print("Prices:")
-  print(price)
-  print("---------------")
+  if (len(orgs) != 0):
+    print("Organizations:")
+    print(orgs)
+    print("---------------")
 
-  print("Organizations:")
-  print(orgs)
-  print("---------------")
+  if (len(number) != 0):
+    print("Numbers:")
+    print(number)
+    print("---------------")
 
-  print("Numbers:")
-  print(number)
-  print("---------------")
-
-  print("Other:")
-  print(other)
+  if (len(other) != 0):
+    print("Other:")
+    print(other)
 
 
 # Function for sentiment analysis
@@ -171,19 +178,18 @@ Wisconsin Department of Insurance to file a complaint against you. Very truly yo
   print("SUMMARY:")
   print(summarize(args.text_content, word_count=90) + "\n")
 
-  print("ENTITY ANALYSIS: \n")
+  print("ENTITY ANALYSIS:")
   sample_analyze_entities(args.text_content)
   # sample_analyze_entities(example_text)
 
   # call language_analysis function, pass in text
   sentiment, entities = language_analysis(args.text_content)
   # prints sentiment score (-1 to +1) and magnitude (unbounded)
-  print("SENTIMENT SCORE: \n")
+  print("SENTIMENT SCORE:")
   print(sentiment.score) 
   print("\n")
-  print("SENTIMENT MAGNITUDE: \n")
-  print(sentiment.magnitude) 
-
+  print("SENTIMENT MAGNITUDE:")
+  print(sentiment.magnitude)
   
 if __name__ == "__main__":
   main()
