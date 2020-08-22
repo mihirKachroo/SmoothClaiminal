@@ -6,6 +6,7 @@ from google.cloud.language import types
 import os
 from google.oauth2 import service_account
 
+# Function for entity analysis
 def sample_analyze_entities(text_content):
   client = language_v1.LanguageServiceClient.from_service_account_json("./cred.json")
 
@@ -91,6 +92,36 @@ def sample_analyze_entities(text_content):
   print(other)
 
 
+# Function for sentiment analysis
+def language_analysis(text):
+
+  # Instantiates a client
+  client = language_v1.LanguageServiceClient.from_service_account_json("./cred.json")
+
+  # Initialize document
+  # document = client.document_from_text(text)
+  document = types.Document(content=text,type=enums.Document.Type.PLAIN_TEXT)
+
+  #sentiment analysis, gives us sentiment score and also magnitude
+  # sentiment score is -1 to +1
+  # magnitude is unbounded, 0 to infinity, basically how important is the sentiment overall
+  sent_analysis = client.analyze_sentiment(document=document)
+
+  # to show what your options are
+  # print(dir(sent_analysis))
+
+  # to save time, .sentiment is just one of the methods
+  sentiment = sent_analysis.document_sentiment
+
+  # entity analysis, gives us salience
+  ent_analysis = client.analyze_entities(document=document)
+
+  entities = ent_analysis.entities
+
+  # return the sentiment and entities
+  return sentiment, entities
+
+
 # Import libraries for text summarization
 from gensim.summarization import summarize
 from gensim.summarization import keywords
@@ -118,12 +149,21 @@ Wisconsin Department of Insurance to file a complaint against you. Very truly yo
 
   print("FULL TEXT: \n" + args.text_content + "\n")
 
-  print("Summarization:")
+  print("SUMMARY:")
   print(summarize(args.text_content, word_count=90) + "\n")
 
-  print("Entity Analysis: \n")
+  print("ENTITY ANALYSIS: \n")
   sample_analyze_entities(args.text_content)
   # sample_analyze_entities(example_text)
+
+  # call language_analysis function, pass in text
+  sentiment, entities = language_analysis(args.text_content)
+  # prints sentiment score (-1 to +1) and magnitude (unbounded)
+  print("SENTIMENT SCORE: \n")
+  print(sentiment.score) 
+  print("\n")
+  print("SENTIMENT MAGNITUDE: \n")
+  print(sentiment.magnitude) 
 
   
 if __name__ == "__main__":
