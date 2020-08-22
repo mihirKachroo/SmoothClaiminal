@@ -30,14 +30,23 @@ block content %}
     </div>
     <div class="row">
       <div class="col-m-6" style="padding: 8px;">
-        <h6>Result</h6>
+        <h4>Result</h4>
         {% if message %}
         <p>{{ message }}</p>
         {% endif %}
 
-        <h6>Data Insights</h6>
+        <h4>Data Insights</h4>
         {% if gottenNames %}
+        <h6>Name</h6>
         <p>{{ gottenNames }}</p>
+        {% endif %}
+        {% if gottenPhone %}
+        <h6>Phone Number</h6>
+        <p>{{ gottenPhone }}</p>
+        {% endif %}
+        {% if gottenEmail %}
+        <h6>Email Address</h6>
+        <p>{{ gottenEmail }}</p>
         {% endif %}
       </div>
     </div>
