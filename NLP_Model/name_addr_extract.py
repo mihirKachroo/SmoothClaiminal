@@ -2,6 +2,7 @@ import re
 import nltk
 from nltk.corpus import stopwords
 stop = stopwords.words('english')
+import numpy
 
 string = """
 Hey,
