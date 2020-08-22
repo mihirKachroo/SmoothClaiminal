@@ -1,25 +1,29 @@
-{% extends "layouts/base.html" %}
-
-{% block title %} 404 Error {% endblock %}
+{% extends "layouts/base.html" %} {% block title %} 404 Error {% endblock %}
 
 <!-- Specific CSS goes HERE -->
-{% block stylesheets %}
-{% endblock stylesheets %}
-
-{% block content %}
+{% block stylesheets %} {% endblock stylesheets %} {% block content %}
 
 <!-- [ auth-signin ] start -->
 <!-- [ Main Content ] start -->
-<link rel="stylesheet" href="/static/assets/css/upload.css">
+<link rel="stylesheet" href="/static/assets/css/upload.css" />
 
 <div class="pcoded-main-container">
-    <div class="pcoded-content">
-            <div class="row" style="height: 120px;">
-            <div class="area col-sm-11 col-md-11 col-lg-11" >
-                <input type="file" id="upload" />
-            </div>
-            </div>
+  <div class="pcoded-content">
+    <div class="row" style="height: 120px;">
+      <div class="area col-sm-11 col-md-11 col-lg-11">
+        <input type="file" id="upload" />
+      </div>
     </div>
+  </div>
+  <form action="/upload.html" method="post">
+    <p>Enter sName:</p>
+    <p><input type="text" name="nm" /></p>
+    <p><input type="submit" value="submit" /></p>
+  </form>
+
+  {% if message %}
+  <p>{{ message }}</p>
+  {% endif %}
 </div>
 <!-- [ auth-signin ] end -->
 
