@@ -37,12 +37,19 @@ def sample_analyze_entities(text_content):
 
       # Get entity type, e.g. PERSON, LOCATION, ADDRESS, NUMBER, et al
       ent = enums.Entity.Type(entity.type).name
+      ent_len = len((entity.name).split(" "))
 
-      if (ent == "PERSON"):
+
+      if (ent == "PERSON" and (ent_len == 2 or ent_len == 3)):
         people.append(entity.name)
 
       elif (ent == "LOCATION"):
-        location.append(entity.name)
+        for mention in entity.mentions:
+          if enums.EntityMention.Type(mention.type).name != 'PROPER':
+            location.append(entity.name.lower())
+          
+          else:
+            location.append(entity.name)
 
       elif (ent == "ADDRESS"):
         address.append(entity.name)
@@ -60,64 +67,58 @@ def sample_analyze_entities(text_content):
         orgs.append(entity.name)
 
       else:
-        other.append(entity.name)
+        other.append(entity.name.lower())
 
-      # Get the salience score associated with the entity in the [0, 1.0] range
-      # print(u"Salience score: {}".format(entity.salience))
+  # Filter price if more than 1 exists
+  if (len(price) > 0):
+    price[0].replace('$','').replace(',','')
 
-      # Loop over the metadata associated with entity. For many known entities,
-      # the metadata is a Wikipedia URL (wikipedia_url) and Knowledge Graph MID (mid).
-      # Some entity types may have additional metadata, e.g. ADDRESS entities
-      # may have metadata for the address street_name, postal_code, et al.
-      # for metadata_name, metadata_value in entity.metadata.items():
-      #     print(u"{}: {}".format(metadata_name, metadata_value))
+  if (len(price) > 1):
+    min = float(price[0].replace('$','').replace(',',''))
+    max = 0
 
-      # Loop over the mentions of this entity in the input document.
-      # The API currently supports proper noun mentions.
-      # for mention in entity.mentions:
-      #     print(u"Mention text: {}".format(mention.text.content))
+    for p in price:
+      num = float(p.replace('$','').replace(',',''))
+      if (num < min):
+        min = num
 
-  # Look through the "other"
+      if (num > max):
+        max = num
+    
+    price = [min, max]
 
-  if (len(people) != 0):
-    print("People:")
-    print(people)
-    print("---------------")
+  # Process the information to determine type of claim (Home, Auto, Health, Dental?)
+  possible_auto = ['car', 'truck', 'bus', 'van', 'minivan', 'stolen']
+  possible_health = ['hospital', 'emergency room', 'emergency', 'bone', 'cut', 'blood', 'bleeding', 'bleed', 'scar', 'surgery']
+  possible_dental = ['dentist', 'dental', 'dental office', 'teeth', 'gums', 'crown', 'molar', 'cavity']
+  possible_home = ['home', 'house', 'basement', 'room', 'living room', 'sofa', 'couch', 'tv', 'computer', 'stolen']
 
-  if (len(location) != 0):
-    print("Locations:")
-    print(location)
-    print("---------------")
+  categories = []
 
-  if (len(address) != 0):
-    print("Addresses:")
-    print(address)
-    print("---------------")
+  for auto in possible_auto:
+    if auto in other:
+      categories.append("Auto")
 
-  if (len(date) != 0):
-    print("Dates:")
-    print(date)
-    print("---------------")
+  for health in possible_health:
+    if health in location or health in other:
+      categories.append("Health")
 
-  if (len(price) != 0):
-    print("Prices:")
-    print(price)
-    print("---------------")
+  for dental in possible_dental:
+    if dental in location or dental in other:
+      categories.append("Dental")
 
-  if (len(orgs) != 0):
-    print("Organizations:")
-    print(orgs)
-    print("---------------")
+  for home in possible_home:
+    if home in location or home in other:
+      categories.append("Home")
 
-  if (len(number) != 0):
-    print("Numbers:")
-    print(number)
-    print("---------------")
+  # Remove duplicates
+  categories = set(categories)
+  price = set(price)
+  date = set(date)
+  location = set(location)
+  address = set(address)
 
-  if (len(other) != 0):
-    print("Other:")
-    print(other)
-
+  return [categories, price, date, location, address]
 
 # Function for sentiment analysis
 def language_analysis(text):
@@ -131,68 +132,30 @@ def language_analysis(text):
 
   #sentiment analysis, gives us sentiment score and also magnitude
   # sentiment score is -1 to +1
-  # magnitude is unbounded, 0 to infinity, basically how important is the sentiment overall
   sent_analysis = client.analyze_sentiment(document=document)
-
-  # to show what your options are
-  # print(dir(sent_analysis))
 
   # to save time, .sentiment is just one of the methods
   sentiment = sent_analysis.document_sentiment
 
-  # entity analysis, gives us salience
-  ent_analysis = client.analyze_entities(document=document)
-
-  entities = ent_analysis.entities
-
-  # return the sentiment and entities
-  return sentiment, entities
+  # return the sentiment
+  return sentiment
 
 
 # Import libraries for text summarization
 from gensim.summarization import summarize
 from gensim.summarization import keywords
 
-def main():
-  import argparse
 
-  example_text = "August 21, 2020 Mr. Abner Kenny Northern Insurance P.O. Box 337 Milwaukee, WI Date of incident: July 12, 2020 \
-Dear Mr. Kenny As you know, I was involved in a collision with a van owned by your insured on Chestnut St. in Waukesha, WI. I was \
-waiting at a stop sign, when the Jenkins Hardware van rear-ended me. I was not injured, but my car suffered a fair amount of damage, \
-which, despite repeated phone calls, Northern Insurance has so far refused to pay for. The Jenkins driver was obviously negligent. \
-He rear-ended someone waiting at a stop sign. It is an open-and-shut case. As a result of this incident, my trunk was caved in. \
-I have a small Honda, and small cars don’t tend to fare very well when they are hit by commercial vans. I brought it to my usual \
-mechanic, who recommended that I go to Waukesha Body Shop, where they gave me an estimate for $4,600 for a full repair. I have attached \
-another copy of the estimate, although I have sent it to you twice before. You also have pictures of the damage. My car is only 2 years \
-old, and is worth far more than that. I understand that your estimator valued the repair costs at $4,000. That is not that far off. I \
-don’t understand why we haven’t been able to agree on a repair price. Taking into account your insured’s absolute liability and my damages \
-in this case, I demand $4,600.00 to settle this case. This is not a complex claim. If I do not hear from you in one week, I will call the \
-Wisconsin Department of Insurance to file a complaint against you. Very truly yours, Fred Smith"
-
-  parser = argparse.ArgumentParser()
-  parser.add_argument("--text_content", type=str, default=example_text)
-  args = parser.parse_args()
+# Get summary of text
+def summarize(text):
+  return summarize(args.text_content, word_count=90)
 
 
-  print("FULL TEXT: \n" + args.text_content + "\n")
-
-  print("SUMMARY:")
-  print(summarize(args.text_content, word_count=90) + "\n")
-
-  print("ENTITY ANALYSIS:")
-  sample_analyze_entities(args.text_content)
-  # sample_analyze_entities(example_text)
-
+# Get the urgency (0 being least, 1 being most)
+def getUrgency(text):
   # call language_analysis function, pass in text
-  sentiment, entities = language_analysis(args.text_content)
-  # prints sentiment score (-1 to +1) and magnitude (unbounded)
-  print("SENTIMENT SCORE:")
-  print(sentiment.score) 
-  print("\n")
-  print("SENTIMENT MAGNITUDE:")
-  print(sentiment.magnitude)
+  sentiment = language_analysis(args.text_content)
   
-if __name__ == "__main__":
-  main()
+  return 0.5 + (sentiment.score/2)
 
 
