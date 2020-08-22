@@ -44,7 +44,7 @@ def upload():
     message = ''
     if request.method == "POST":
         if request.files:
-            pdfFile = request.files["pdf"]
+            pdfFile = request.files["getFile"]
             pdfFile.save(os.path.join("./app/base/static/files", pdfFile.filename))
             print(os.path.join("./app/base/static/files", pdfFile.filename))
             message = textract.process("./app/base/static/files/" + pdfFile.filename, encoding='utf-8')
