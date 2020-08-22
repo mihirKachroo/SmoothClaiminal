@@ -2,11 +2,12 @@
 # provides entity recognition/analysis
 from google.cloud import language_v1
 from google.cloud.language_v1 import enums
+from google.cloud.language import types
 import os
 from google.oauth2 import service_account
 
 def sample_analyze_entities(text_content):
-  client = language_v1.LanguageServiceClient()
+  client = language_v1.LanguageServiceClient.from_service_account_json("./cred.json")
 
   # Available types are PLAN_TEXT and HTML
   type_ = enums.Document.Type.PLAIN_TEXT
