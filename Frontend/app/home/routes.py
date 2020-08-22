@@ -9,6 +9,8 @@ from flask import render_template, redirect, url_for, request
 from flask_login import login_required, current_user
 from app import login_manager
 from jinja2 import TemplateNotFound
+import textract
+import os
 
 @blueprint.route('/index')
 @login_required
@@ -40,6 +42,12 @@ def route_template():
 @blueprint.route('/upload.html',methods = ['POST', 'GET'])
 def upload():
     message = ''
-    if request.method == 'POST':
-        message='works'
-    return render_template('upload.html', message=message)
+    if request.method == "POST":
+        if request.files:
+            pdfFile = request.files["pdf"]
+            pdfFile.save(os.path.join("./app/base/static/files", pdfFile.filename))
+            print(os.path.join("./app/base/static/files", pdfFile.filename))
+            message = textract.process("./app/base/static/files/" + pdfFile.filename, encoding='utf-8')
+            print(message)
+            return render_template('upload.html', message = message)
+    return render_template('upload.html', message = message)
