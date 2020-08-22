@@ -1,9 +1,6 @@
 {% extends "layouts/base.html" %}
 
-{% block title %} Dashboard {% endblock %}
-
-<!-- Specific CSS goes HERE -->
-{% block stylesheets %}{% endblock stylesheets %}
+{% block title %} Upload {% endblock %}
 
 {% block content %}
 
@@ -18,36 +15,40 @@
           <div class="form-group">
             <label>Select file</label>
             <div class="custom-file">
-              <input type="file" class="custom-file-input" name="pdf" id="pdf">
-              <label class="custom-file-label" for="pdf">Select PDF...</label>
+              <input type="file" class="custom-file-input" name="getFile" id="getFile" onchange="updateFilename()">
+              <label class="custom-file-label" for="getFile">Select File...</label>
             </div>
           </div>
-          <!-- <h6>Selected File</h6>
-          <div id="fileList">None</div> -->
-          <button type="submit" class="btn btn-primary">Upload PDF</button>
+          <h6>Selected File</h6>
+          <div id="selectedFile">None</div>
+          <button type="submit" class="btn btn-primary">Upload File</button>
         </form>
       </div>
     </div>
     <div class="row">
-        <div class="col-m-6" style="padding: 8px;">
-          <h6>Result</h6>
-          {% if message %}
-          <p>{{ message }}</p>
-          {% endif %}
-        </div>
+      <div class="col-m-6" style="padding: 8px;">
+        <h6>Result</h6>
+        {% if message %}
+        <p>{{ message }}</p>
+        {% endif %}
+      </div>
     </div>
   </div>
 </div>
 <!-- [ Main Content ] end -->
 
+<script>
+  updateFilename = function () {
+    var input = document.getElementById('getFile');
+    var output = document.getElementById('selectedFile');
+    output.innerHTML = '<p>' + input.files.item(0).name + '</p>';
+    console.log("haha")
+  }
+</script>
+
 {% endblock content %}
 
 <!-- Specific Page JS goes HERE  -->
 {% block javascripts %}
-
-<!-- Apex Chart -->
-<script src="/static/assets/js/plugins/apexcharts.min.js"></script>
-<!-- custom-chart js -->
-<script src="/static/assets/js/pages/dashboard-main.js"></script>
 
 {% endblock javascripts %}
