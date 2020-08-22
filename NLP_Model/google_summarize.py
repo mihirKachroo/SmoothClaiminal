@@ -2,11 +2,12 @@
 # provides entity recognition/analysis
 from google.cloud import language_v1
 from google.cloud.language_v1 import enums
+from google.cloud.language import types
 import os
 from google.oauth2 import service_account
 
 def sample_analyze_entities(text_content):
-  client = language_v1.LanguageServiceClient()
+  client = language_v1.LanguageServiceClient.from_service_account_json("./cred.json")
 
   # Available types are PLAN_TEXT and HTML
   type_ = enums.Document.Type.PLAIN_TEXT
@@ -89,6 +90,40 @@ def sample_analyze_entities(text_content):
   print("Other:")
   print(other)
 
+
+
+
+def language_analysis(text):
+
+  # Instantiates a client
+  client = language_v1.LanguageServiceClient.from_service_account_json("./cred.json")
+
+  # Initialize document
+  # document = client.document_from_text(text)
+  document = types.Document(content=text,type=enums.Document.Type.PLAIN_TEXT)
+
+  #sentiment analysis, gives us sentiment score and also magnitude
+  # sentiment score is -1 to +1
+  # magnitude is unbounded, 0 to infinity, basically how important is the sentiment overall
+  sent_analysis = client.analyze_sentiment(document=document)
+
+  # to show what your options are
+  # print(dir(sent_analysis))
+
+  # to save time, .sentiment is just one of the methods
+  sentiment = sent_analysis.document_sentiment
+
+  # entity analysis, gives us salience
+  ent_analysis = client.analyze_entities(document=document)
+
+  entities = ent_analysis.entities
+
+  # return the sentiment and entities
+  return sentiment, entities
+
+
+
+
 def main():
   import argparse
 
@@ -98,8 +133,12 @@ def main():
   args = parser.parse_args()
 
   sample_analyze_entities(args.text_content)
-
   # sample_analyze_entities(example_text)
+
+  sentiment, entities = language_analysis(example_text)
+  # print sentiment score (-1 to +1) and magnitude (unbounded)
+  print(sentiment.score)
+  print(sentiment.magnitude)
   
 if __name__ == "__main__":
   main()
