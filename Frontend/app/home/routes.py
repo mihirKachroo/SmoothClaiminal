@@ -44,10 +44,15 @@ def upload():
     message = ''
     if request.method == "POST":
         if request.files:
-            pdfFile = request.files["getFile"]
-            pdfFile.save(os.path.join("./app/base/static/files", pdfFile.filename))
-            print(os.path.join("./app/base/static/files", pdfFile.filename))
-            message = textract.process("./app/base/static/files/" + pdfFile.filename, encoding='utf-8')
+            selectedFile = request.files["getFile"]
+            if selectedFile.filename == "":
+                print("No file selected")
+                message = "**Please select a file. (Image, Word document, pdf)**"
+                return render_template('upload.html', message = message)
+
+            selectedFile.save(os.path.join("./app/base/static/files", selectedFile.filename))
+            print(os.path.join("./app/base/static/files", selectedFile.filename))
+            message = textract.process("./app/base/static/files/" + selectedFile.filename, encoding='utf-8')
             print(message)
             return render_template('upload.html', message = message)
     return render_template('upload.html', message = message)
