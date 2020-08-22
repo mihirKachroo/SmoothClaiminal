@@ -36,12 +36,19 @@ def sample_analyze_entities(text_content):
 
       # Get entity type, e.g. PERSON, LOCATION, ADDRESS, NUMBER, et al
       ent = enums.Entity.Type(entity.type).name
+      ent_len = len((entity.name).split(" "))
 
-      if (ent == "PERSON"):
+
+      if (ent == "PERSON" and (ent_len == 2 or ent_len == 3)):
         people.append(entity.name)
 
       elif (ent == "LOCATION"):
-        location.append(entity.name)
+        for mention in entity.mentions:
+          if enums.EntityMention.Type(mention.type).name != 'PROPER':
+            location.append(entity.name.lower())
+          
+          else:
+            location.append(entity.name)
 
       elif (ent == "ADDRESS"):
         address.append(entity.name)
@@ -59,43 +66,61 @@ def sample_analyze_entities(text_content):
         orgs.append(entity.name)
 
       else:
-        other.append(entity.name)
+        other.append(entity.name.lower())
 
       # Get the salience score associated with the entity in the [0, 1.0] range
       # print(u"Salience score: {}".format(entity.salience))
 
-      # Loop over the metadata associated with entity. For many known entities,
-      # the metadata is a Wikipedia URL (wikipedia_url) and Knowledge Graph MID (mid).
-      # Some entity types may have additional metadata, e.g. ADDRESS entities
-      # may have metadata for the address street_name, postal_code, et al.
-      # for metadata_name, metadata_value in entity.metadata.items():
-      #     print(u"{}: {}".format(metadata_name, metadata_value))
+  # Filter price if more than 1 exists
+  if (len(price) > 0):
+    price[0].replace('$','').replace(',','')
 
-      # Loop over the mentions of this entity in the input document.
-      # The API currently supports proper noun mentions.
-      # for mention in entity.mentions:
-      #     print(u"Mention text: {}".format(mention.text.content))
+  if (len(price) > 1):
+    min = float(price[0].replace('$','').replace(',',''))
+    max = 0
 
-  # Look through the "other"
+    for p in price:
+      num = float(p.replace('$','').replace(',',''))
+      if (num < min):
+        min = num
+
+      if (num > max):
+        max = num
+    
+    price = [min, max]
+
+  # Process the information to determine type of claim (Home, Auto, Health, Dental?)
+  possible_auto = ['car', 'truck', 'bus', 'van', 'minivan', 'stolen']
+  possible_health = ['hospital', 'emergency room', 'emergency', 'bone', 'cut', 'blood', 'bleeding', 'bleed', 'scar', 'surgery']
+  possible_dental = ['dentist', 'dental', 'dental office', 'teeth', 'gums', 'crown', 'molar', 'cavity']
+  possible_home = ['home', 'house', 'basement', 'room', 'living room', 'sofa', 'couch', 'tv', 'computer', 'stolen']
+
+  categories = []
+
+  for auto in possible_auto:
+    if auto in other:
+      categories.append("Auto")
+
+  for health in possible_health:
+    if health in location or health in other:
+      categories.append("Health")
+
+  for dental in possible_dental:
+    if dental in location or dental in other:
+      categories.append("Dental")
+
+  for home in possible_home:
+    if home in location or home in other:
+      categories.append("Home")
 
   if (len(people) != 0):
     print("People:")
-    print(people)
+    print(set(people))
     print("---------------")
 
-  if (len(location) != 0):
-    print("Locations:")
-    print(location)
-    print("---------------")
-
-  if (len(address) != 0):
-    print("Addresses:")
-    print(address)
-    print("---------------")
-
-  if (len(date) != 0):
-    print("Dates:")
-    print(date)
+  if (categories):
+    print("Possible insurance policies:")
+    print(set(categories))
     print("---------------")
 
   if (len(price) != 0):
@@ -103,19 +128,34 @@ def sample_analyze_entities(text_content):
     print(price)
     print("---------------")
 
+  if (len(date) != 0):
+    print("Dates:")
+    print(set(date))
+    print("---------------")
+
+  if (len(location) != 0):
+    print("Locations:")
+    print(set(location))
+    print("---------------")
+
+  if (len(address) != 0):
+    print("Addresses:")
+    print(set(address))
+    print("---------------")
+
   if (len(orgs) != 0):
     print("Organizations:")
-    print(orgs)
+    print(set(orgs))
     print("---------------")
 
   if (len(number) != 0):
     print("Numbers:")
-    print(number)
+    print(set(number))
     print("---------------")
 
   if (len(other) != 0):
     print("Other:")
-    print(other)
+    print(set(other))
 
 
 # Function for sentiment analysis
@@ -166,7 +206,7 @@ another copy of the estimate, although I have sent it to you twice before. You a
 old, and is worth far more than that. I understand that your estimator valued the repair costs at $4,000. That is not that far off. I \
 don’t understand why we haven’t been able to agree on a repair price. Taking into account your insured’s absolute liability and my damages \
 in this case, I demand $4,600.00 to settle this case. This is not a complex claim. If I do not hear from you in one week, I will call the \
-Wisconsin Department of Insurance to file a complaint against you. Very truly yours, Fred Smith"
+Wisconsin Department of Insurance to file a complaint against you. Very truly yours, Fred Smith."
 
   parser = argparse.ArgumentParser()
   parser.add_argument("--text_content", type=str, default=example_text)
@@ -180,16 +220,14 @@ Wisconsin Department of Insurance to file a complaint against you. Very truly yo
 
   print("ENTITY ANALYSIS:")
   sample_analyze_entities(args.text_content)
-  # sample_analyze_entities(example_text)
+  print("\n")
 
   # call language_analysis function, pass in text
   sentiment, entities = language_analysis(args.text_content)
+  
   # prints sentiment score (-1 to +1) and magnitude (unbounded)
   print("SENTIMENT SCORE:")
   print(sentiment.score) 
-  print("\n")
-  print("SENTIMENT MAGNITUDE:")
-  print(sentiment.magnitude)
   
 if __name__ == "__main__":
   main()
