@@ -36,9 +36,8 @@ def infoExtracter(string):
     emails = extract_email_addresses(string)
     names = extract_names(string)
 
-    print(numbers)
-    print(emails)
-    print(names)
+    final = [numbers, emails,names]
+    return final
 
 
 #Remove
@@ -54,4 +53,4 @@ Wow Willson you're insane
 """
 
 
-infoExtracter(globalString)
+#infoExtracter(globalString)

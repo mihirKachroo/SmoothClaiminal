@@ -12,6 +12,8 @@ from jinja2 import TemplateNotFound
 from werkzeug.utils import secure_filename
 import textract
 import os
+from NLP_Model import name_addr_extract
+
 
 @blueprint.route('/index')
 @login_required
@@ -53,7 +55,10 @@ def IsFileType(filename, fileTypes):
 
 @blueprint.route('/upload.html',methods = ['POST', 'GET'])
 def upload():
+    
     message = ''
+
+    
     if request.method == "POST":
         if request.files:
             selectedFile = request.files["getFile"]
@@ -69,7 +74,20 @@ def upload():
             else:
                 if IsFileType(selectedFile.filename, ["DOCX", "PDF"]):
                     message = textract.process("./app/base/static/files/" + selectedFile.filename, encoding='utf-8')
-                    return render_template('upload.html', message = message)
+                    ourString = """
+                    Hey,
+                    This week has been crazy. Attached is my report on IBM. Can you give it a quick read and provide some feedback.
+                    Also, make sure you reach out to Claire (claire@xyz.com).
+                    You're the best.
+                    Cheers,
+                    George W.
+                    212-555-1234
+                    Wow Willson you're insane
+                    """
+                    gottenIs = name_addr_extract.infoExtracter(messageGotten)
+                    gottenNames="yo"
+                    return render_template('upload.html', message = message, gottenNames=gottenNames)
                 else:
                     return render_template('upload.html', message = "It is an image file.")
+
     return render_template('upload.html', message = message)

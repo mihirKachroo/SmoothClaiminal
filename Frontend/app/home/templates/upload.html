@@ -1,8 +1,5 @@
-{% extends "layouts/base.html" %}
-
-{% block title %} Upload {% endblock %}
-
-{% block content %}
+{% extends "layouts/base.html" %} {% block title %} Upload {% endblock %} {%
+block content %}
 
 <!-- [ Main Content ] start -->
 <div class="pcoded-main-container">
@@ -10,13 +7,21 @@
     <div class="row">
       <div class="col">
         <h1>Upload File</h1>
-        <hr>
+        <hr />
         <form action="/upload.html" method="POST" enctype="multipart/form-data">
           <div class="form-group">
             <label>Select file</label>
             <div class="custom-file">
-              <input type="file" class="custom-file-input" name="getFile" id="getFile" onchange="updateFilename()">
-              <label class="custom-file-label" id="selectedFile" for="getFile">Select File...</label>
+              <input
+                type="file"
+                class="custom-file-input"
+                name="getFile"
+                id="getFile"
+                onchange="updateFilename()"
+              />
+              <label class="custom-file-label" id="selectedFile" for="getFile"
+                >Select File...</label
+              >
             </div>
           </div>
           <button type="submit" class="btn btn-primary">Upload File</button>
@@ -29,6 +34,11 @@
         {% if message %}
         <p>{{ message }}</p>
         {% endif %}
+
+        <h6>Data Insights</h6>
+        {% if gottenNames %}
+        <p>{{ gottenNames }}</p>
+        {% endif %}
       </div>
     </div>
   </div>
@@ -37,16 +47,14 @@
 
 <script>
   updateFilename = function () {
-    var input = document.getElementById('getFile');
-    var output = document.getElementById('selectedFile');
-    output.innerHTML = '<p>' + input.files.item(0).name + '</p>';
-    console.log("haha")
-  }
+    var input = document.getElementById("getFile");
+    var output = document.getElementById("selectedFile");
+    output.innerHTML = "<p>" + input.files.item(0).name + "</p>";
+    console.log("haha");
+  };
 </script>
 
 {% endblock content %}
 
 <!-- Specific Page JS goes HERE  -->
-{% block javascripts %}
-
-{% endblock javascripts %}
+{% block javascripts %} {% endblock javascripts %}
