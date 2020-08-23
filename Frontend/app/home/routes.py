@@ -13,6 +13,7 @@ from werkzeug.utils import secure_filename
 import textract
 import os
 from NLP_Model import name_addr_extract
+from NLP_Model import summarize
 
 
 @blueprint.route('/index')
@@ -62,10 +63,17 @@ def upload():
     
     byteString = ''
     message = ''
+    gottenSummary = 'No Info'
     gottenNames = 'No Info'
+    gottenCategories = "No Info"
+    gottenPrice = "No Info"
+    gottenDate = "No Info"
+    gottenAddresses = "No Info"
     gottenPhone = 'No Info'
     gottenEmail = 'No Info'
+    gottenUrgency = 'No Info'
     filePath = "./app/base/static/files/"
+    summary = ''
     
     if request.method == "POST":
         if request.files:
@@ -85,13 +93,19 @@ def upload():
                     selectedFile.save(os.path.join(filePath, selectedFile.filename))
                     byteString = textract.process(filePath + selectedFile.filename, encoding='utf-8')
                     message = byteString.decode('utf-8')
-                    gottenNames = name_addr_extract.extract_names(message)
+                    gottenSummary = summarize.get_summary(message)
+                    gottenUrgency = summarize.getUrgency(message)
+                    gottenNames = summarize.analyze_entities(message)[0]
+                    gottenCategories = summarize.analyze_entities(message)[1]
+                    gottenPrice = summarize.analyze_entities(message)[2]
+                    gottenDate = summarize.analyze_entities(message)[3]
+                    gottenAddresses = summarize.analyze_entities(message)[4]
                     gottenPhone = name_addr_extract.extract_phone_numbers(message)
                     gottenEmail = name_addr_extract.extract_email_addresses(message)
-                    return render_template('upload.html', message = message, 
-                    gottenNames = gottenNames, gottenPhone = gottenPhone, gottenEmail = gottenEmail)
-
-
+                    return render_template('upload.html', message = message, gottenSummary = gottenSummary, 
+                    gottenNames = gottenNames, gottenCategories = gottenCategories, gottenPrice = gottenPrice, gottenPhone = gottenPhone, 
+                    gottenDate = gottenDate, gottenAddresses = gottenAddresses, gottenEmail = gottenEmail,
+                    gottenUrgency = gottenUrgency,)
                 else:
                     return render_template('upload.html', message = "It is an image file.")
     return render_template('upload.html', message = message)

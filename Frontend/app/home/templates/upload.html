@@ -21,7 +21,7 @@ block content %}
       </div>
     </div>
     <div class="row">
-      <div class="col-m-6" style="padding: 8px;">
+      <div class="col-m-6" style="padding: 15px;">
         {% if message %}
         <h4>Message</h4>
         <div class="col">
@@ -31,10 +31,33 @@ block content %}
             </div>
           </div>
         </div>
+
         <h4>Data Insights</h4>
+        {% if gottenSummary %}
+        <div class="col">
+          <div class="card bg-c-blue order-card">
+            <div class="card-body">
+              <h6 class="text-white">Summary</h6>
+              <p class="m-b-0">{{ gottenSummary }}</p>
+            </div>
+          </div>
+        </div>
+        {% endif %}
+
+        {% if gottenCategories %}
+        <div class="col">
+          <div class="card bg-c-blue order-card">
+            <div class="card-body">
+              <h6 class="text-white">Categories</h6>
+              <p class="m-b-0">{{ gottenCategories }}</p>
+            </div>
+          </div>
+        </div>
+        {% endif %}
+
         {% if gottenNames %}
         <div class="col">
-          <div class="card bg-c-red order-card">
+          <div class="card bg-c-blue order-card">
             <div class="card-body">
               <h6 class="text-white">Name</h6>
               <p class="m-b-0">{{ gottenNames }}</p>
@@ -42,9 +65,21 @@ block content %}
           </div>
         </div>
         {% endif %}
+
+        {% if gottenDate %}
+        <div class="col">
+          <div class="card bg-c-blue order-card">
+            <div class="card-body">
+              <h6 class="text-white">Date</h6>
+              <p class="m-b-0">{{ gottenDate }}</p>
+            </div>
+          </div>
+        </div>
+        {% endif %}
+
         {% if gottenPhone %}
         <div class="col">
-          <div class="card bg-c-green order-card">
+          <div class="card bg-c-blue order-card">
             <div class="card-body">
               <h6 class="text-white">Phone Number</h6>
               <p class="m-b-0">{{ gottenPhone }}</p>
@@ -52,9 +87,21 @@ block content %}
           </div>
         </div>
         {% endif %}
+
+        {% if gottenAddresses %}
+        <div class="col">
+          <div class="card bg-c-blue order-card">
+            <div class="card-body">
+              <h6 class="text-white">Address</h6>
+              <p class="m-b-0">{{ gottenAddresses }}</p>
+            </div>
+          </div>
+        </div>
+        {% endif %}
+
         {% if gottenEmail %}
         <div class="col">
-          <div class="card bg-c-yellow order-card">
+          <div class="card bg-c-blue order-card">
             <div class="card-body">
               <h6 class="text-white">Email Address</h6>
               <p class="m-b-0">{{ gottenEmail }}</p>
@@ -62,6 +109,29 @@ block content %}
           </div>
         </div>
         {% endif %}
+
+        {% if gottenPrice %}
+        <div class="col">
+          <div class="card bg-c-blue order-card">
+            <div class="card-body">
+              <h6 class="text-white">Quote</h6>
+              <p class="m-b-0">{{ gottenPrice }}</p>
+            </div>
+          </div>
+        </div>
+        {% endif %}
+
+        {% if gottenUrgency %}
+        <div class="col">
+          <div class="card bg-c-blue order-card">
+            <div class="card-body">
+              <h6 class="text-white">Urgency</h6>
+              <p class="m-b-0">{{ gottenUrgency }}</p>
+            </div>
+          </div>
+        </div>
+        {% endif %}
+
         {% endif %}
       </div>
     </div>

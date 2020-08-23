@@ -9,7 +9,7 @@ from google.oauth2 import service_account
 
 # Function for entity analysis
 def analyze_entities(text_content):
-  client = language_v1.LanguageServiceClient.from_service_account_json("./cred.json")
+  client = language_v1.LanguageServiceClient.from_service_account_json("./NLP_Model/cred.json") # it is from Frontend
 
   # Available types are PLAN_TEXT and HTML
   type_ = enums.Document.Type.PLAIN_TEXT
@@ -117,16 +117,15 @@ def analyze_entities(text_content):
   categories = set(categories) if categories else {}
   price = set(price) if price else {}
   date = set(date) if date else {}
-  location = set(location) if location else {}
   address = set(address) if address else {}
 
-  return [people, categories, price, date, location, address]
+  return [people, categories, price, date, address]
 
 # Function for sentiment analysis
 def language_analysis(text):
 
   # Instantiates a client
-  client = language_v1.LanguageServiceClient.from_service_account_json("./cred.json")
+  client = language_v1.LanguageServiceClient.from_service_account_json("./NLP_Model/cred.json")
 
   # Initialize document
   # document = client.document_from_text(text)
