@@ -23,6 +23,8 @@ _build
 _static
 _templates
 
+node_modules/
+
 # javascript
 package-lock.json
 .vscode/symbols.json
