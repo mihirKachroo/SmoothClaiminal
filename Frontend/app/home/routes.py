@@ -44,7 +44,7 @@ def route_template():
 
 def IsFileType(filename, fileTypes):
     if not "." in filename:
-        return False;
+        return False
     
     ext = filename.rsplit(".", 1)[1]
     print(ext.upper())
@@ -52,6 +52,10 @@ def IsFileType(filename, fileTypes):
         return True
     else:
         return False
+
+@blueprint.route('/claims.html')
+def claims():
+    return render_template('claims-list.html')
 
 @blueprint.route('/upload.html',methods = ['POST', 'GET'])
 def upload():

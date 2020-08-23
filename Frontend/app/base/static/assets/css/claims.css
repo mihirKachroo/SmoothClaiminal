@@ -1,0 +1,29 @@
+.claims body {
+    background: red;
+}
+
+.rotate-icon {
+    margin-left: 0.75rem;
+}
+
+.claims.badge {
+    margin-left: 1.5rem;
+}
+
+.claims.card-header {
+    padding: 25px 25px 15px 25px;
+    border-bottom: 1px solid lightgrey;
+}
+
+.claims.card-header h5 {
+    font-size: 20px;
+}
+
+.claimHeading {
+    font-weight: 700;
+    font-size: 18px;
+}
+
+.claimRow {
+    margin-bottom: 1.5rem;
+}
