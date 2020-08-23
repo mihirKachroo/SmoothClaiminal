@@ -68,6 +68,7 @@
   },
   "scripts": {
     "examples": "npm run resultsPage:node",
+    "startDB": "node databaseCreater.js",
     "resultsPage:node": "node resultsPage/eventlog.js",
     "resultsPage:browser-macos": "open resultsPage/browser/browser.html",
     "resultsPage:browser-linux": "xdg-open resultsPage/browser/browser.html",
