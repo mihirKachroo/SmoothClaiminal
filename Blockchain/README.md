@@ -2,6 +2,6 @@
 The Blockchain stuff for Smooth Claiminal
 
 ## Getting Started
-- run pip install requirements.txt
-- run npm install
-- run python run.py
+- run npm i on your terminal
+- run npm createDB to create the ipfs database
+- run npm resultsPage:browser-<insert OS> to start the ipfs vieweing page
