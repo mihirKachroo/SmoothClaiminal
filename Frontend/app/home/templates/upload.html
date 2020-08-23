@@ -49,7 +49,10 @@ block content %}
           <div class="card bg-c-blue order-card">
             <div class="card-body">
               <h6 class="text-white">Applicable Insurance Policies</h6>
-              <p class="m-b-0">{{ gottenCategories }}</p>
+              {% for c in gottenCategories %}
+              <input type="checkbox" id=c name=c value="c">
+              <label class="m-b-0" for=c>{{ c }}</label><br>
+              {% endfor %}
             </div>
           </div>
         </div>
@@ -60,7 +63,10 @@ block content %}
           <div class="card bg-c-blue order-card">
             <div class="card-body">
               <h6 class="text-white">Name</h6>
-              <p class="m-b-0">{{ gottenNames }}</p>
+              {% for c in gottenNames %}
+              <input type="checkbox" id=c name=c value="c">
+              <label class="m-b-0" for=c>{{ c }}</label><br>
+              {% endfor %}
             </div>
           </div>
         </div>
@@ -71,7 +77,10 @@ block content %}
           <div class="card bg-c-blue order-card">
             <div class="card-body">
               <h6 class="text-white">Date</h6>
-              <p class="m-b-0">{{ gottenDate }}</p>
+              {% for c in gottenDate %}
+              <input type="checkbox" id=c name=c value="c">
+              <label class="m-b-0" for=c>{{ c }}</label><br>
+              {% endfor %}
             </div>
           </div>
         </div>
@@ -82,7 +91,10 @@ block content %}
           <div class="card bg-c-blue order-card">
             <div class="card-body">
               <h6 class="text-white">Phone Number</h6>
-              <p class="m-b-0">{{ gottenPhone }}</p>
+              {% for c in gottenPhone %}
+              <input type="checkbox" id=c name=c value="c">
+              <label class="m-b-0" for=c>{{ c }}</label><br>
+              {% endfor %}
             </div>
           </div>
         </div>
@@ -93,7 +105,10 @@ block content %}
           <div class="card bg-c-blue order-card">
             <div class="card-body">
               <h6 class="text-white">Address</h6>
-              <p class="m-b-0">{{ gottenAddresses }}</p>
+              {% for c in gottenAddresses %}
+              <input type="checkbox" id=c name=c value="c">
+              <label class="m-b-0" for=c>{{ c }}</label><br>
+              {% endfor %}
             </div>
           </div>
         </div>
@@ -104,7 +119,10 @@ block content %}
           <div class="card bg-c-blue order-card">
             <div class="card-body">
               <h6 class="text-white">Email Address</h6>
-              <p class="m-b-0">{{ gottenEmail }}</p>
+              {% for c in gottenEmail %}
+              <input type="checkbox" id=c name=c value="c">
+              <label class="m-b-0" for=c>{{ c }}</label><br>
+              {% endfor %}
             </div>
           </div>
         </div>
@@ -115,23 +133,23 @@ block content %}
           <div class="card bg-c-blue order-card">
             <div class="card-body">
               <h6 class="text-white">Quote</h6>
-              <p class="m-b-0">${{ gottenPrice }}</p>
+                <p class="m-b-0">${{ gottenPrice }}</p>
             </div>
           </div>
         </div>
         {% endif %}
 
         {% if gottenUrgency %}
-        <div class="col">
-          <div class="card bg-c-blue order-card">
-            <div class="card-body">
-              <h6 class="text-white">Urgency</h6>
-              <p class="m-b-0">{{ gottenUrgency }}</p>
+          <div class="col">
+            <div class="card bg-c-blue order-card">
+              <div class="card-body">
+                <h6 class="text-white">Urgency</h6>
+                <p class="m-b-0">{{ gottenUrgency }}</p>
+              </div>
             </div>
           </div>
-        </div>
+          <a href="claims.html" class="nav-link"><button class="btn btn-primary">Submit Form</button></a>
         {% endif %}
-
         {% endif %}
       </div>
     </div>
@@ -144,7 +162,6 @@ block content %}
     var input = document.getElementById("getFile");
     var output = document.getElementById("selectedFile");
     output.innerHTML = "<p>" + input.files.item(0).name + "</p>";
-    console.log("haha");
   };
 </script>
 
