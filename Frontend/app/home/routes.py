@@ -65,6 +65,7 @@ def upload():
     gottenNames = 'No Info'
     gottenPhone = 'No Info'
     gottenEmail = 'No Info'
+    filePath = "./app/base/static/files/"
     
     if request.method == "POST":
         if request.files:
@@ -79,8 +80,10 @@ def upload():
                 return render_template('upload.html', message = message)
             else:
                 if IsFileType(selectedFile.filename, ["DOCX", "PDF"]):
-                    selectedFile.save(os.path.join("./app/base/static/files/", selectedFile.filename))
-                    byteString = textract.process("./app/base/static/files/" + selectedFile.filename, encoding='utf-8')
+                    if not os.path.exists(filePath):
+                        os.makedirs(filePath)
+                    selectedFile.save(os.path.join(filePath, selectedFile.filename))
+                    byteString = textract.process(filePath + selectedFile.filename, encoding='utf-8')
                     message = byteString.decode('utf-8')
                     gottenNames = name_addr_extract.extract_names(message)
                     gottenPhone = name_addr_extract.extract_phone_numbers(message)

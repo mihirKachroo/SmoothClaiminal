@@ -12,16 +12,8 @@ block content %}
           <div class="form-group">
             <label>Select file</label>
             <div class="custom-file">
-              <input
-                type="file"
-                class="custom-file-input"
-                name="getFile"
-                id="getFile"
-                onchange="updateFilename()"
-              />
-              <label class="custom-file-label" id="selectedFile" for="getFile"
-                >Select File...</label
-              >
+              <input type="file" class="custom-file-input" name="getFile" id="getFile" onchange="updateFilename()" />
+              <label class="custom-file-label" id="selectedFile" for="getFile">Select File...</label>
             </div>
           </div>
           <button type="submit" class="btn btn-primary">Upload File</button>
@@ -30,23 +22,46 @@ block content %}
     </div>
     <div class="row">
       <div class="col-m-6" style="padding: 8px;">
-        <h4>Result</h4>
         {% if message %}
-        <p>{{ message }}</p>
-        {% endif %}
-
+        <h4>Message</h4>
+        <div class="col">
+          <div class="card bg-c-blue order-card">
+            <div class="card-body">
+              <p class="m-b-0">{{ message }}</p>
+            </div>
+          </div>
+        </div>
         <h4>Data Insights</h4>
         {% if gottenNames %}
-        <h6>Name</h6>
-        <p>{{ gottenNames }}</p>
+        <div class="col">
+          <div class="card bg-c-red order-card">
+            <div class="card-body">
+              <h6 class="text-white">Name</h6>
+              <p class="m-b-0">{{ gottenNames }}</p>
+            </div>
+          </div>
+        </div>
         {% endif %}
         {% if gottenPhone %}
-        <h6>Phone Number</h6>
-        <p>{{ gottenPhone }}</p>
+        <div class="col">
+          <div class="card bg-c-green order-card">
+            <div class="card-body">
+              <h6 class="text-white">Phone Number</h6>
+              <p class="m-b-0">{{ gottenPhone }}</p>
+            </div>
+          </div>
+        </div>
         {% endif %}
         {% if gottenEmail %}
-        <h6>Email Address</h6>
-        <p>{{ gottenEmail }}</p>
+        <div class="col">
+          <div class="card bg-c-yellow order-card">
+            <div class="card-body">
+              <h6 class="text-white">Email Address</h6>
+              <p class="m-b-0">{{ gottenEmail }}</p>
+            </div>
+          </div>
+        </div>
+        {% endif %}
         {% endif %}
       </div>
     </div>
