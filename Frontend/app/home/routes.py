@@ -87,6 +87,8 @@ def upload():
                     gottenEmail = name_addr_extract.extract_email_addresses(message)
                     return render_template('upload.html', message = message, 
                     gottenNames = gottenNames, gottenPhone = gottenPhone, gottenEmail = gottenEmail)
+
+
                 else:
-                    return render_template('upload.html', message = "It is an image file.", gottenNames=gottenNames)
+                    return render_template('upload.html', message = "It is an image file.")
     return render_template('upload.html', message = message)
