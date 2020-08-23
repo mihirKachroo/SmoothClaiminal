@@ -195,10 +195,10 @@ function floatchart() {
                 curve: 'smooth'
             },
             series: [{
-                name: 'Arts',
+                name: 'Auto',
                 data: [20, 50, 30, 60, 30, 50]
             }, {
-                name: 'Commerce',
+                name: 'Health',
                 data: [60, 30, 65, 45, 67, 35]
             }],
             legend: {
@@ -206,7 +206,7 @@ function floatchart() {
             },
             xaxis: {
                 type: 'datetime',
-                categories: ['1/11/2000', '2/11/2000', '3/11/2000', '4/11/2000', '5/11/2000', '6/11/2000'],
+                categories: ['1/11/2020', '2/11/2020', '3/11/2020', '4/11/2020', '5/11/2020', '6/11/2020'],
                 axisBorder: {
                     show: false,
                 },
