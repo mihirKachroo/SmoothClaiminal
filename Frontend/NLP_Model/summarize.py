@@ -8,7 +8,7 @@ import os
 from google.oauth2 import service_account
 
 # Function for entity analysis
-def sample_analyze_entities(text_content):
+def analyze_entities(text_content):
   client = language_v1.LanguageServiceClient.from_service_account_json("./cred.json")
 
   # Available types are PLAN_TEXT and HTML
@@ -147,15 +147,13 @@ from gensim.summarization import keywords
 
 
 # Get summary of text
-def summarize(text):
-  return summarize(args.text_content, word_count=90)
+def get_summary(text):
+  return summarize(text, word_count=90)
 
 
 # Get the urgency (0 being least, 1 being most)
 def getUrgency(text):
   # call language_analysis function, pass in text
-  sentiment = language_analysis(args.text_content)
+  sentiment = language_analysis(text)
   
   return 0.5 + (sentiment.score/2)
-
-
