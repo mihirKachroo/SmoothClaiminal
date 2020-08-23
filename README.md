@@ -1,8 +1,8 @@
 # Smooth Claiminal
 
-Hackathon Project For HackThe6ix 2020
+Won Intact Insurance Sponsor Prize at HackThe6ix 2020
 
-[View Video Demonstration](https://www.youtube.com/watch?v=ki2QPCBCLu0)
+[View Video Demonstration](https://www.youtube.com/watch?v=F0aafxKzhbk&feature=emb_logo)
 
 ## Getting started
 - You can run either the blockchain, frontend or nlp model
