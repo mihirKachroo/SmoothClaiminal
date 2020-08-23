@@ -157,5 +157,13 @@ def get_summary(text):
 def getUrgency(text):
   # call language_analysis function, pass in text
   sentiment = language_analysis(text)
+  urgency = 0.5 + (sentiment.score/2)
+
+  if (urgency < 0.1):
+    return "Extremely urgent"
   
-  return 0.5 + (sentiment.score/2)
+  elif (urgency < 0.4):
+    return "Urgent"
+
+  else:
+    return "Not urgent"
