@@ -1,4 +1,4 @@
-# HackThe6ix Frontend
+# Smooth Claiminal Frontend
 This is the website frontend for Smooth Claiminal
 
 ## Getting started
