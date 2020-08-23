@@ -81,7 +81,7 @@ def upload():
             selectedFile = request.files["getFile"]
             if selectedFile.filename == "":
                 print("No file selected")
-                message = "**Please select a file. (Image, Word document, pdf)**"
+                message = "**Please select a file.**"
                 return render_template('upload.html', message = message)
             
             if not IsFileType(selectedFile.filename, ["DOCX", "PDF", "JPEG", "PNG"]):
